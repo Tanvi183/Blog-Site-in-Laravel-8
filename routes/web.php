@@ -17,8 +17,8 @@ Route::get('/about', [App\Http\Controllers\FrontEndController::class, 'about'])-
 Route::get('/contact', [App\Http\Controllers\FrontEndController::class, 'contact'])->name('website.contact');
 
 // Admin Panel Routes
-Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
+Route::group(['prefix' => 'admin', 'namespace'=>'App\Http\Controllers\Backend', 'middleware'=>'auth'], function () {
 
-    Route::get('/dashboard', [App\Http\Controllers\Backend\DashboardController::class, 'index'])->name('dashboard');
-
+    Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+    Route::resource('/category', 'CategoryController');
 });
