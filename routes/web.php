@@ -19,6 +19,8 @@ Route::get('/contact', [App\Http\Controllers\FrontEndController::class, 'contact
 // Admin Panel Routes
 Route::group(['prefix' => 'admin', 'namespace'=>'App\Http\Controllers\Backend', 'middleware'=>'auth'], function () {
 
-    Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
-    Route::resource('/category', 'CategoryController');
+    Route::get('dashboard', 'DashboardController@index')->name('dashboard');
+    Route::resource('category', 'CategoryController');
+    Route::resource('tag', 'TagController');
+    Route::resource('post', 'PostController');
 });
