@@ -1,9 +1,13 @@
 @if ($errors->any())
     <div class="alert alert-danger mt-3 mb-3">
-        <ul class="mb-0">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+        @if ($errors->count() == 1)
+            {{ $errors->first() }}
+        @else
+            <ul>
+                @foreach ($errors->all() as $error)
+                    {{ $error }}<br>
+                @endforeach
+            </ul>
+        @endif
     </div>
 @endif

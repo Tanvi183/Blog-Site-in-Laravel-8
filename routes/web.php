@@ -23,4 +23,7 @@ Route::group(['prefix' => 'admin', 'namespace'=>'App\Http\Controllers\Backend', 
     Route::resource('category', 'CategoryController');
     Route::resource('tag', 'TagController');
     Route::resource('post', 'PostController');
+    Route::get('profile', 'UserController@profile')->name('user.profile');
+    Route::post('profile', 'UserController@profile_update')->name('user.profile.update');
+    Route::resource('user', 'UserController');
 });

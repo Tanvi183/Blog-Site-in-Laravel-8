@@ -122,17 +122,15 @@ class PostController extends Controller
 
         $post->tags()->sync($request->tags);
 
-        if($request->hasFile('image')){
-            if($post->image){
-                unlink(public_path($post->image));
-            }else{
-                $image = $request->image;
-                $image_new_name = time() . '.' . $image->getClientOriginalExtension();
-                $image->move('storage/post/', $image_new_name);
-                $post->image = '/storage/post/' . $image_new_name;
-                }
-            }
+        $image  = $request->file('image');
 
+        if($image){
+            @unlink(public_path($post->image));
+            $image = $request->image;
+            $image_new_name = time() . '.' . $image->getClientOriginalExtension();
+            $image->move('storage/post/', $image_new_name);
+            $post->image = '/storage/post/' . $image_new_name;
+        }
         $post->save();
 
         Session::flash('success', 'Post updated successfully');
@@ -148,7 +146,7 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         if($post){
-            if(file_exists(public_path($post->image))){
+            if(file_exists(public_path($post->image)) AND ! empty($post->image)){
                 unlink(public_path($post->image));
             }
 

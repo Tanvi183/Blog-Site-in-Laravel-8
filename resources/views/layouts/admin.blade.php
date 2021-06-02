@@ -101,7 +101,7 @@
             </a>                    
           </li>
           <li class="nav-item mt-auto">
-            <a href="" class="nav-link ">
+            <a href="{{ route('user.index') }}" class="nav-link {{ (request()->is('admin/user*')) ? 'active': '' }}">
               <i class="nav-icon fas fa-user"></i>
               <p>
                 User
@@ -118,7 +118,7 @@
           </li>
           <li class="nav-header">Your Account</li>
           <li class="nav-item mt-auto">
-            <a href="" class="nav-link">
+            <a href="{{ route('user.profile') }}" class="nav-link {{ (request()->is('admin/profile*')) ? 'active': '' }}">
               <i class="nav-icon far fa-user"></i>
               <p>
                 Your Profile
@@ -157,7 +157,7 @@
   <footer class="main-footer">
     <!-- To the right -->
     <div class="float-right d-none d-sm-inline">
-      <div class="mb-0">Developed By Zakir on <a href="https://www.youtube.com/playlist?list=PLl4v4A2HI0YixTm5AsoTu-sKxiQti4-r6">Laravel Blog Development </a>Tutorial Series</div>
+      <div class="mb-0">Developed By Sana Ullah on <a href="https://github.com/Tanvi183">GitHub Link</a></div>
     </div>
     <!-- Default to the left -->
     <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
