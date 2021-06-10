@@ -26,4 +26,8 @@ Route::group(['prefix' => 'admin', 'namespace'=>'App\Http\Controllers\Backend', 
     Route::get('profile', 'UserController@profile')->name('user.profile');
     Route::post('profile', 'UserController@profile_update')->name('user.profile.update');
     Route::resource('user', 'UserController');
+    
+
+    Route::get('setting', 'SettingController@edit')->name('setting.index');
+    Route::post('setting', 'SettingController@update')->name('setting.update');
 });

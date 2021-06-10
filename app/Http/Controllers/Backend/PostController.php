@@ -63,13 +63,7 @@ class PostController extends Controller
 
         $post->tags()->attach($request->tags);
 
-        if($request->hasFile('image')){
-            $image = $request->image;
-            $image_new_name = time() . '.' . $image->getClientOriginalExtension();
-            $image->move('storage/post/', $image_new_name);
-            $post->image = '/storage/post/' . $image_new_name;
-            $post->save();
-        }
+        $this->uploadPhoto($request, $post);
 
         Session::flash('success', 'Post created successfully');
         return redirect()->back();
@@ -122,15 +116,13 @@ class PostController extends Controller
 
         $post->tags()->sync($request->tags);
 
-        $image  = $request->file('image');
-
-        if($image){
+        if (isset($post->image)) {
             @unlink(public_path($post->image));
-            $image = $request->image;
-            $image_new_name = time() . '.' . $image->getClientOriginalExtension();
-            $image->move('storage/post/', $image_new_name);
-            $post->image = '/storage/post/' . $image_new_name;
+            $this->uploadPhoto($request, $post);
+        }else{
+            $this->uploadPhoto($request, $post);
         }
+
         $post->save();
 
         Session::flash('success', 'Post updated successfully');
@@ -155,5 +147,19 @@ class PostController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    // Image Function
+    protected function uploadPhoto($request, $post){
+
+        $validation = $request->validate([
+             'image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048|required',
+        ]);
+
+        $image = $request->file('image');
+        $image_new_name = time() . '.' . $image->getClientOriginalExtension();
+        $image->move('storage/post/', $image_new_name);
+        $post->image = '/storage/post/' . $image_new_name;
+        $post->save();
     }
 }
