@@ -93,7 +93,7 @@
             </a>                    
           </li>
           <li class="nav-item mt-auto">
-            <a href="" class="nav-link ">
+            <a href="{{ route('contact.index') }}" class="nav-link {{ (request()->is('admin/contact*')) ? 'active': '' }}">
               <i class="nav-icon fas fa-envelope"></i>
               <p>
                 Messages

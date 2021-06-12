@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -26,8 +26,11 @@ Route::group(['prefix' => 'admin', 'namespace'=>'App\Http\Controllers\Backend', 
     Route::get('profile', 'UserController@profile')->name('user.profile');
     Route::post('profile', 'UserController@profile_update')->name('user.profile.update');
     Route::resource('user', 'UserController');
-    
-
+    // Contact message
+    Route::get('/contact', 'ContactController@index')->name('contact.index');
+    Route::get('/contact/show/{id}', 'ContactController@show')->name('contact.show');
+    Route::delete('/contact/delete/{id}', 'ContactController@destroy')->name('contact.destroy');
+    // Setting
     Route::get('setting', 'SettingController@edit')->name('setting.index');
     Route::post('setting', 'SettingController@update')->name('setting.update');
 });

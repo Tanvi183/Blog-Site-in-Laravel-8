@@ -37,15 +37,16 @@ class SettingController extends Controller
         ]);
 
         $setting = Setting::first();
+        $setting->save($request->all());
 
-        if (isset($setting->site_logo)) {
-            @unlink(public_path('storage/setting' . $setting->site_logo));
-            $this->uploadPhoto($request, $setting);
-        }else{
-            $this->uploadPhoto($request, $setting);
+        if ($request->hasFile('site_logo')) {
+            if (isset($setting->site_logo)) {
+                @unlink(public_path('storage/setting' . $setting->site_logo));
+                $this->uploadPhoto($request, $setting);
+            }else{
+                $this->uploadPhoto($request, $setting);
+            }
         }
-
-        $setting->update($request->all());
 
         Session::flash('success', 'Setting updated successfully');
         return redirect()->back();

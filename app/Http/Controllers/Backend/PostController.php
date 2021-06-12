@@ -116,14 +116,16 @@ class PostController extends Controller
 
         $post->tags()->sync($request->tags);
 
-        if (isset($post->image)) {
-            @unlink(public_path($post->image));
-            $this->uploadPhoto($request, $post);
-        }else{
-            $this->uploadPhoto($request, $post);
-        }
-
         $post->save();
+
+        if ($request->hasFile('image')) {
+            if (isset($post->image)) {
+                @unlink(public_path($post->image));
+                $this->uploadPhoto($request, $post);
+            }else{
+                $this->uploadPhoto($request, $post);
+            }
+        }
 
         Session::flash('success', 'Post updated successfully');
         return redirect()->back();
@@ -153,7 +155,7 @@ class PostController extends Controller
     protected function uploadPhoto($request, $post){
 
         $validation = $request->validate([
-             'image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048|required',
+             'image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048|',
         ]);
 
         $image = $request->file('image');
