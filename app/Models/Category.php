@@ -10,4 +10,9 @@ class Category extends Model
     use HasFactory;
 
     protected $guarded = ['created_at', 'deleted_at', 'updated_at'];
+
+    public function post()
+    {
+        return $this->hasMany(Post::class);
+    }
 }
